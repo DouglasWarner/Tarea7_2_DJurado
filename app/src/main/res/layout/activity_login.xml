@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.inventory.iu.login.LoginActivity"
+    android:orientation="vertical"
+    android:id="@+id/ltContainer"
+    android:layout_margin="@dimen/container_margin">
+
+    <TextView
+        android:id="@+id/tvTitulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/login_margin_bottom"
+        android:text="@string/login"
+        android:fontFamily="@font/anton"
+        android:textSize="@dimen/tituloInventory"
+        android:gravity="center"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tilUserName"
+        app:errorEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tieUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/tieUserName">
+            <requestFocus/>
+        </com.google.android.material.textfield.TextInputEditText>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tilPassword"
+        app:endIconMode="password_toggle"
+        app:errorEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tiePassword"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/tiePassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/chkRemember"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/chkRemember" />
+
+        <Button
+            android:id="@+id/btSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:text="@string/btSignup"
+            android:onClick="showSignUp"
+            style="?android:attr/borderlessButtonStyle"/>
+            <!-- O -->
+            <!-- style="@style/Widget.AppCompat.Button.Borderless"-->
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btSignIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btSignIn"
+        android:width="170dp"
+        android:layout_gravity="center_horizontal"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:onClick="validateUser"/>
+
+    <ProgressBar
+        android:id="@+id/pbCarga"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone" />
+
+    <!-- PRIMERA OPCION -->
+    <!-- Con la propiedad android:gravity posiciono
+abajo todos los componentes y con android:layout_gravity
+se ha de indicar en cada uno de ellos -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:id="@+id/ltBottomBar"
+        android:layout_marginBottom="@dimen/ltBottomBar_margin_bottom">
+        <!--android:gravity="bottom"-->
+
+        <ImageButton
+            android:id="@+id/btGoogle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:src="@drawable/ic_google"
+            style="?android:attr/buttonBarButtonStyle">
+        </ImageButton>
+
+        <ImageButton
+            android:id="@+id/btFacebook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            style="?android:attr/buttonBarButtonStyle"
+            android:src="@drawable/ic_facebook"
+            >
+
+        </ImageButton>
+    </LinearLayout>
+</LinearLayout>

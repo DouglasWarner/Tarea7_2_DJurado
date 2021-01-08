@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/dashBoardFragment">
+
+    <fragment
+        android:id="@+id/dashBoardFragment"
+        android:name="com.example.inventory.iu.DashBoardFragment"
+        android:label="fragment_dash_board"
+        tools:layout="@layout/fragment_dash_board" >
+        <action
+            android:id="@+id/action_dashBoardFragment_to_listDependencyFragment"
+            app:destination="@id/listDependencyFragment" />
+        <action
+            android:id="@+id/action_dashBoardFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listDependencyFragment"
+        android:name="com.example.inventory.iu.dependency.ListDependencyFragment"
+        android:label="ListDependencyFragment" >
+        <action
+            android:id="@+id/action_listDependencyFragment_to_editDependencyFragment"
+            app:destination="@id/editDependencyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editDependencyFragment"
+        android:name="com.example.inventory.iu.dependency.EditDependencyFragment"
+        android:label="fragment_edit_dependency"
+        tools:layout="@layout/fragment_edit_dependency" >
+        <action
+            android:id="@+id/action_editDependencyFragment_to_listDependencyFragment"
+            app:destination="@id/listDependencyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.example.inventory.iu.preferences.SettingFragment"
+        android:label="SettingFragment" >
+        <action
+            android:id="@+id/action_settingFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.example.inventory.iu.preferences.AccountFragment"
+        android:label="AccountFragment" />
+</navigation>

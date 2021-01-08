@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="err_user_empty">Campo incompleto</string>
+    <string name="err_password_format">Formato erroneo</string>
+    <string name="err_password_empty">Campo incompleto</string>
+    <string name="err_authentication">El usuario no existe</string>
+</resources>

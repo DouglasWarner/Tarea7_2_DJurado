@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Inventory</string>
+    <string name="inventory">Inventory</string>
+    <string name="tiePassword">Password</string>
+    <string name="tieUserName">Nombre de usuario</string>
+    <string name="login">Login</string>
+    <string name="btGoogle">Google</string>
+    <string name="btFacebook">Facebook</string>
+    <string name="chkRemember">Recuerdame</string>
+    <string name="btSignup">Registrar</string>
+    <string name="btSignIn">Login</string>
+    <string name="tvTitleSignUp">Registro</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="tieRepeatPassword">Confirmar contraseña</string>
+    <string name="tieEmail">Correo Electronio</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="err_password">La contraseña debe tener mas de 3 caracteres</string>
+    <string name="err_repeat_password">Las contraseñas no coinciden</string>
+    <string name="err_email_empty">El email no puede estar vacio</string>
+    <string name="tvLoading">Loading...</string>
+    <string name="tvNoData">Lo sentimos no hay datos</string>
+    <string name="tv_edit_dependency">Edit Dependency</string>
+    <string name="key_account">account</string>
+
+</resources>
