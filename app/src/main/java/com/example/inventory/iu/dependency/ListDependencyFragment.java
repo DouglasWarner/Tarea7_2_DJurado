@@ -20,11 +20,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.inventory.R;
 import com.example.inventory.data.model.Dependency;
 import com.example.inventory.iu.adapter.DependencyAdapter;
+import com.example.inventory.iu.base.BaseDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListDependencyFragment extends Fragment implements ListDependencyContract.View {
+public class ListDependencyFragment extends Fragment implements ListDependencyContract.View, DependencyAdapter.OnManagerDependencyListener, BaseDialogFragment.OnPositiveClickListener {
 
     private LinearLayout llLoading;
     private LinearLayout llNoData;
@@ -58,12 +59,10 @@ public class ListDependencyFragment extends Fragment implements ListDependencyCo
         rvDependency = view.findViewById(R.id.rvDependency);
 
         // 1. Crear adapter
-        adapter = new DependencyAdapter(new ArrayList<>(), new DependencyAdapter.OnItemClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(view.getContext(), "Se ha pulsado en " + adapter.getDependencyItem(rvDependency.getChildAdapterPosition(v)).getName(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        adapter = new DependencyAdapter(new ArrayList<>());
+
+//        onDeleteDependency(adapter.getDependencyItem(rvDependency.getChildAdapterPosition(v)));
+//        Toast.makeText(view.getContext(), "Se ha pulsado en " + adapter.getDependencyItem(rvDependency.getChildAdapterPosition(v)).getName(), Toast.LENGTH_SHORT).show();
 
         // 2. Crear el diseño del RecyclerView
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
@@ -82,6 +81,10 @@ public class ListDependencyFragment extends Fragment implements ListDependencyCo
     public void onStart() {
         super.onStart();
         presenter.load();
+
+        if(getArguments() !=null)
+            if(getArguments().getBoolean(BaseDialogFragment.CONFIRM_DELETE))
+                onPositiveClick();
     }
 
     @Override
@@ -120,6 +123,20 @@ public class ListDependencyFragment extends Fragment implements ListDependencyCo
     }
 
     @Override
+    public void onEditDependency(View v) {
+        Toast.makeText(getContext(), "Se ha pulsado en " + adapter.getDependencyItem(rvDependency.getChildAdapterPosition(v)).getName(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDeleteDependency(Dependency dependency) {
+        Bundle bundle = new Bundle();
+        bundle.putString(BaseDialogFragment.TITLE, getString(R.string.title_delete_dependency));
+        bundle.putString(BaseDialogFragment.MESSAGE, String.format(getString(R.string.message_delete_dependency), dependency.getShortName()));
+
+        NavHostFragment.findNavController(this).navigate(R.id.action_listDependencyFragment_to_baseDialogFragment, bundle);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_sort_by_shortname:
@@ -142,5 +159,14 @@ public class ListDependencyFragment extends Fragment implements ListDependencyCo
         menu.clear();
         inflater.inflate(R.menu.menu_list_dependency, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    /**
+     * Este metodo se ejecuta cuando el usuario ha pulsado el boton ACEPTAR
+     * en el cuadro de dialogo que pide confirmación
+     */
+    @Override
+    public void onPositiveClick() {
+
     }
 }

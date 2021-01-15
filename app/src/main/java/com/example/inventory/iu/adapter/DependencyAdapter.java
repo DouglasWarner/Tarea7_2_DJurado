@@ -3,6 +3,8 @@ package com.example.inventory.iu.adapter;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -19,21 +21,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 public class DependencyAdapter extends RecyclerView.Adapter<DependencyAdapter.ViewHolder> {
 
-    public interface OnItemClickListener extends View.OnClickListener{
-        @Override
-        void onClick(View v);
+    public interface OnManagerDependencyListener{
+        void onEditDependency(View view);
+        void onDeleteDependency(Dependency dependency);
     }
+
     private List<Dependency> list;
-    private OnItemClickListener listener;
     private Random rndColorLetter;
 
-    public DependencyAdapter(List<Dependency> list, OnItemClickListener listener) {
+    public DependencyAdapter(List<Dependency> list) {
         this.list = list;
-        this.listener = listener;
         rndColorLetter = new Random();
     }
 
@@ -41,7 +41,6 @@ public class DependencyAdapter extends RecyclerView.Adapter<DependencyAdapter.Vi
     @Override
     public DependencyAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_dependency, parent, false);
-        view.setOnClickListener(listener);
         return new ViewHolder(view);
     }
 
@@ -80,8 +79,23 @@ public class DependencyAdapter extends RecyclerView.Adapter<DependencyAdapter.Vi
             iconLetter = itemView.findViewById(R.id.iconLetter);
             tvName = itemView.findViewById(R.id.tvName);
             tvDescription = itemView.findViewById(R.id.tvDescription);
+
+            itemView.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((OnManagerDependencyListener)v).onEditDependency(v);
+                }
+            });
+            itemView.setOnLongClickListener(new OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    ((OnManagerDependencyListener)v).onDeleteDependency(null);
+                    return false;
+                }
+            });
         }
     }
+
 
     public Dependency getDependencyItem(int position)
     {

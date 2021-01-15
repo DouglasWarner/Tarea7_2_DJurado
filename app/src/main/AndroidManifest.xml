@@ -3,6 +3,7 @@
     package="com.example.inventory">
 
     <application
+        android:name=".iu.InventoryApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,11 +12,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="com.example.inventory.iu.InventoryActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="com.example.inventory.iu.signup.SignUpActivity"
@@ -26,7 +23,11 @@
         <activity
             android:name="com.example.inventory.iu.SplashActivity"
             android:theme="@style/noActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <!-- Incluir fuentes -->

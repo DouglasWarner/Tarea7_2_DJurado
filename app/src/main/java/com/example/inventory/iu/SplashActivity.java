@@ -30,6 +30,8 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                //Sólo si el checkbox recuerdame no está seleccionado se muestra login y no existe
+                //ningún usuario
                 initLogin();
             }
         },WAIT_TIME);

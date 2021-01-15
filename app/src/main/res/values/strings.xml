@@ -36,5 +36,7 @@
     <string name="tvNoData">Lo sentimos no hay datos</string>
     <string name="tv_edit_dependency">Edit Dependency</string>
     <string name="key_account">account</string>
+    <string name="message_delete_dependency">¿Quiere eliminar la dependencia %1$s?</string>
+    <string name="title_delete_dependency">Eliminar Dependencia</string>
 
 </resources>
