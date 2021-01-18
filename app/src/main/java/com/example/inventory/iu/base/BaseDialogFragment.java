@@ -45,7 +45,7 @@ public class BaseDialogFragment extends DialogFragment {
 
                     // Esto esta mal.
                     Bundle bundle = new Bundle();
-                    bundle.putBoolean(CONFIRM_DELETE,true);
+                    bundle.putBoolean(CONFIRM_DELETE, true);
                     NavHostFragment.findNavController(BaseDialogFragment.this).navigate(R.id.action_baseDialogFragment_to_listDependencyFragment, bundle);
                 }
             });

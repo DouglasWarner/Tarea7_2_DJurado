@@ -21,6 +21,7 @@ import com.example.inventory.R;
 import com.example.inventory.data.model.Dependency;
 import com.example.inventory.iu.adapter.DependencyAdapter;
 import com.example.inventory.iu.base.BaseDialogFragment;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ public class ListDependencyFragment extends Fragment implements ListDependencyCo
     private RecyclerView rvDependency;
     private DependencyAdapter adapter;
     private ListDependencyPresenter presenter;
+    private Dependency deleted;
 
     private boolean reverseSort;
 
@@ -41,6 +43,7 @@ public class ListDependencyFragment extends Fragment implements ListDependencyCo
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
     }
 
     @Nullable
@@ -59,7 +62,7 @@ public class ListDependencyFragment extends Fragment implements ListDependencyCo
         rvDependency = view.findViewById(R.id.rvDependency);
 
         // 1. Crear adapter
-        adapter = new DependencyAdapter(new ArrayList<>());
+        adapter = new DependencyAdapter(new ArrayList<>(), this);
 
 //        onDeleteDependency(adapter.getDependencyItem(rvDependency.getChildAdapterPosition(v)));
 //        Toast.makeText(view.getContext(), "Se ha pulsado en " + adapter.getDependencyItem(rvDependency.getChildAdapterPosition(v)).getName(), Toast.LENGTH_SHORT).show();
@@ -83,8 +86,11 @@ public class ListDependencyFragment extends Fragment implements ListDependencyCo
         presenter.load();
 
         if(getArguments() !=null)
-            if(getArguments().getBoolean(BaseDialogFragment.CONFIRM_DELETE))
-                onPositiveClick();
+            if(getArguments().getBoolean(BaseDialogFragment.CONFIRM_DELETE)) {
+                presenter.delete(deleted);
+
+            }
+//                onPositiveClick();
     }
 
     @Override
@@ -106,6 +112,30 @@ public class ListDependencyFragment extends Fragment implements ListDependencyCo
         llLoading.setVisibility(View.GONE);
     }
 
+    /**
+     * Este metodo es el que se ejecuta cuando se ha eliminado correctamente una dependencia
+     * de la base de datos y se muestra un Snackbar con la opcion UNDO
+     */
+    @Override
+    public void onsuccessDeleted() {
+        adapter.delete(deleted);
+        showSnackBarDeleted();
+    }
+
+    private void showSnackBarDeleted() {
+        Snackbar.make(getView(), getString(R.string.confirm_delete_dependency), Snackbar.LENGTH_SHORT)
+                .setAction(getString(R.string.undo), v -> {
+                    undoDeleted();
+                }).show();
+    }
+
+    /**
+     * Método de vuelve a insertar la dependencia borrada en la base de datos
+     */
+    private void undoDeleted() {
+
+    }
+
     @Override
     public void onSuccess(List<Dependency> list) {
         // 1. Si esta visible NODATA se cambia visibilidad a GONE
@@ -115,24 +145,23 @@ public class ListDependencyFragment extends Fragment implements ListDependencyCo
         adapter.update(list);
     }
 
-    public void toEditDependency(Dependency dependency)
-    {
+    @Override
+    public void onEditDependency(View v) {
+        Dependency dependency = adapter.getDependencyItem(rvDependency.getChildAdapterPosition(v));
+        Toast.makeText(getContext(), "Se ha pulsado en " + dependency.getName(), Toast.LENGTH_SHORT).show();
         Bundle bundle = new Bundle();
         bundle.putSerializable("dependency", dependency);
         NavHostFragment.findNavController(this).navigate(R.id.action_listDependencyFragment_to_editDependencyFragment, bundle);
     }
 
     @Override
-    public void onEditDependency(View v) {
-        Toast.makeText(getContext(), "Se ha pulsado en " + adapter.getDependencyItem(rvDependency.getChildAdapterPosition(v)).getName(), Toast.LENGTH_SHORT).show();
-    }
+    public void onDeleteDependency(View v) {
+        Dependency dependency = adapter.getDependencyItem(rvDependency.getChildAdapterPosition(v));
 
-    @Override
-    public void onDeleteDependency(Dependency dependency) {
         Bundle bundle = new Bundle();
         bundle.putString(BaseDialogFragment.TITLE, getString(R.string.title_delete_dependency));
         bundle.putString(BaseDialogFragment.MESSAGE, String.format(getString(R.string.message_delete_dependency), dependency.getShortName()));
-
+        deleted = dependency;
         NavHostFragment.findNavController(this).navigate(R.id.action_listDependencyFragment_to_baseDialogFragment, bundle);
     }
 
@@ -167,6 +196,6 @@ public class ListDependencyFragment extends Fragment implements ListDependencyCo
      */
     @Override
     public void onPositiveClick() {
-
+        Toast.makeText(getContext(), "Nunca se ejecuta", Toast.LENGTH_SHORT).show();
     }
 }

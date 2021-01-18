@@ -38,4 +38,8 @@ public class DependencyRepository {
     {
         return list;
     }
+
+    public void delete(Dependency deleted) {
+        list.remove(deleted);
+    }
 }

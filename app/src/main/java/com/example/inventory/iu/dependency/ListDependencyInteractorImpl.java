@@ -15,6 +15,7 @@ public class ListDependencyInteractorImpl {
     interface ListDependencyInteractor {
         void OnNoData();
         void OnSuccess(List<Dependency> list);
+        void onSuccessDeleted();
     }
 
     public ListDependencyInteractorImpl(ListDependencyInteractor callback) {
@@ -31,5 +32,11 @@ public class ListDependencyInteractorImpl {
             callback.OnNoData();
         else
             callback.OnSuccess(list);
+    }
+
+
+    public void delete(Dependency deleted) {
+        DependencyRepository.getInstance().delete(deleted);
+        callback.onSuccessDeleted();
     }
 }

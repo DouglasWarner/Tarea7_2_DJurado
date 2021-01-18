@@ -23,6 +23,11 @@ public class ListDependencyPresenter implements ListDependencyContract.Presenter
         interactor.load();
     }
 
+    @Override
+    public void delete(Dependency deleted) {
+        interactor.delete(deleted);
+    }
+
     /**
      * Este metodo viene de la interfaz de BasePresenter
      */
@@ -48,5 +53,10 @@ public class ListDependencyPresenter implements ListDependencyContract.Presenter
     public void OnSuccess(List<Dependency> list) {
         view.hideProgress();
         view.onSuccess(list);
+    }
+
+    @Override
+    public void onSuccessDeleted() {
+        view.onsuccessDeleted();
     }
 }

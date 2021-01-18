@@ -17,9 +17,13 @@ public interface ListDependencyContract {
 
         //Método que oculta la barra de progreso en la interfaz
         void hideProgress();
+
+        void onsuccessDeleted();
     }
 
     interface Presenter extends BasePresenter{
         void load();
+
+        void delete(Dependency deleted);
     }
 }

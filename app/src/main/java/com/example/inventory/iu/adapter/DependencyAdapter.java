@@ -25,15 +25,17 @@ import java.util.Random;
 public class DependencyAdapter extends RecyclerView.Adapter<DependencyAdapter.ViewHolder> {
 
     public interface OnManagerDependencyListener{
-        void onEditDependency(View view);
-        void onDeleteDependency(Dependency dependency);
+        void onEditDependency(View dependency);
+        void onDeleteDependency(View dependency);
     }
 
+    private OnManagerDependencyListener listener;
     private List<Dependency> list;
     private Random rndColorLetter;
 
-    public DependencyAdapter(List<Dependency> list) {
+    public DependencyAdapter(List<Dependency> list, OnManagerDependencyListener listener) {
         this.list = list;
+        this.listener = listener;
         rndColorLetter = new Random();
     }
 
@@ -80,16 +82,16 @@ public class DependencyAdapter extends RecyclerView.Adapter<DependencyAdapter.Vi
             tvName = itemView.findViewById(R.id.tvName);
             tvDescription = itemView.findViewById(R.id.tvDescription);
 
-            itemView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ((OnManagerDependencyListener)v).onEditDependency(v);
-                }
-            });
+//            itemView.setOnClickListener(new OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    listener.onEditDependency(v);
+//                }
+//            });
             itemView.setOnLongClickListener(new OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    ((OnManagerDependencyListener)v).onDeleteDependency(null);
+                    listener.onDeleteDependency(v);
                     return false;
                 }
             });
@@ -126,5 +128,10 @@ public class DependencyAdapter extends RecyclerView.Adapter<DependencyAdapter.Vi
             Collections.reverse(orderList);
 
         update(orderList);
+    }
+
+    public void delete(Dependency deleted) {
+        list.remove(deleted);
+        this.notifyDataSetChanged();
     }
 }

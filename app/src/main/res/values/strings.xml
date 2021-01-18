@@ -38,5 +38,7 @@
     <string name="key_account">account</string>
     <string name="message_delete_dependency">¿Quiere eliminar la dependencia %1$s?</string>
     <string name="title_delete_dependency">Eliminar Dependencia</string>
+    <string name="confirm_delete_dependency">Se ha eliminado la dependencia</string>
+    <string name="undo">Undo</string>
 
 </resources>
