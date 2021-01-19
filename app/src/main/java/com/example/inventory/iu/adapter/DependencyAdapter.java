@@ -49,7 +49,7 @@ public class DependencyAdapter extends RecyclerView.Adapter<DependencyAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull DependencyAdapter.ViewHolder holder, int position) {
         holder.iconLetter.setLetter(list.get(position).getShortName());
-        holder.iconLetter.setShapeColor(Color.rgb(rndColorLetter.nextInt(255),rndColorLetter.nextInt(255),rndColorLetter.nextInt(255)));
+//        holder.iconLetter.setShapeColor(Color.rgb(rndColorLetter.nextInt(255),rndColorLetter.nextInt(255),rndColorLetter.nextInt(255)));
         holder.tvName.setText(list.get(position).getName());
         holder.tvDescription.setText(list.get(position).getDescription());
     }
@@ -104,17 +104,10 @@ public class DependencyAdapter extends RecyclerView.Adapter<DependencyAdapter.Vi
         return list.get(position);
     }
 
-    public void SortByShortName(boolean reverse)
+    public void SortByShortName()
     {
-        List<Dependency> orderList = new ArrayList<>();
-        orderList.addAll(this.list);
-
-        if(reverse)
-            Collections.sort(orderList, new ShortNameSort());
-        else
-            Collections.reverse(orderList);
-
-        update(orderList);
+        Collections.sort(list, new ShortNameSort());
+        this.notifyDataSetChanged();
     }
 
     public void SortByName(boolean reverse)
@@ -132,6 +125,12 @@ public class DependencyAdapter extends RecyclerView.Adapter<DependencyAdapter.Vi
 
     public void delete(Dependency deleted) {
         list.remove(deleted);
+        this.notifyDataSetChanged();
+    }
+
+    public void add(Dependency deleted) {
+        list.add(deleted);
+        Collections.sort(list, new ShortNameSort());
         this.notifyDataSetChanged();
     }
 }

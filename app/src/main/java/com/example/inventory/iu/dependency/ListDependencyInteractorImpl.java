@@ -16,6 +16,8 @@ public class ListDependencyInteractorImpl {
         void OnNoData();
         void OnSuccess(List<Dependency> list);
         void onSuccessDeleted();
+
+        void onSuccessUndo();
     }
 
     public ListDependencyInteractorImpl(ListDependencyInteractor callback) {
@@ -38,5 +40,10 @@ public class ListDependencyInteractorImpl {
     public void delete(Dependency deleted) {
         DependencyRepository.getInstance().delete(deleted);
         callback.onSuccessDeleted();
+    }
+
+    public void undo(Dependency deleted) {
+        DependencyRepository.getInstance().getList().add(deleted);
+        callback.onSuccessUndo();
     }
 }

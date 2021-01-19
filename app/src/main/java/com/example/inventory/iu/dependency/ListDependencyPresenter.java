@@ -57,6 +57,16 @@ public class ListDependencyPresenter implements ListDependencyContract.Presenter
 
     @Override
     public void onSuccessDeleted() {
-        view.onsuccessDeleted();
+        view.onSuccessDeleted();
+    }
+
+    @Override
+    public void onSuccessUndo() {
+        view.onSuccessUndo();
+    }
+
+    @Override
+    public void undo(Dependency deleted) {
+        interactor.undo(deleted);
     }
 }

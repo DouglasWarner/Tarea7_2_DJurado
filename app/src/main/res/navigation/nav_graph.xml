@@ -52,9 +52,5 @@
     <dialog
         android:id="@+id/baseDialogFragment"
         android:name="com.example.inventory.iu.base.BaseDialogFragment"
-        android:label="BaseDialogFragment" >
-        <action
-            android:id="@+id/action_baseDialogFragment_to_listDependencyFragment"
-            app:destination="@id/listDependencyFragment" />
-    </dialog>
+        android:label="BaseDialogFragment" />
 </navigation>

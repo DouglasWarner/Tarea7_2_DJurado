@@ -43,7 +43,8 @@ public class ListDependencyFragment extends Fragment implements ListDependencyCo
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
+//        setRetainInstance(true);  // Si trabajamos con FragmentManager
+
     }
 
     @Nullable
@@ -87,6 +88,7 @@ public class ListDependencyFragment extends Fragment implements ListDependencyCo
 
         if(getArguments() !=null)
             if(getArguments().getBoolean(BaseDialogFragment.CONFIRM_DELETE)) {
+                deleted = (Dependency)getArguments().getSerializable("deleted");
                 presenter.delete(deleted);
 
             }
@@ -117,13 +119,14 @@ public class ListDependencyFragment extends Fragment implements ListDependencyCo
      * de la base de datos y se muestra un Snackbar con la opcion UNDO
      */
     @Override
-    public void onsuccessDeleted() {
+    public void onSuccessDeleted() {
         adapter.delete(deleted);
         showSnackBarDeleted();
+
     }
 
     private void showSnackBarDeleted() {
-        Snackbar.make(getView(), getString(R.string.confirm_delete_dependency), Snackbar.LENGTH_SHORT)
+        Snackbar.make(getActivity().findViewById(R.id.content), getString(R.string.confirm_delete_dependency), Snackbar.LENGTH_SHORT)
                 .setAction(getString(R.string.undo), v -> {
                     undoDeleted();
                 }).show();
@@ -133,7 +136,15 @@ public class ListDependencyFragment extends Fragment implements ListDependencyCo
      * Método de vuelve a insertar la dependencia borrada en la base de datos
      */
     private void undoDeleted() {
+        presenter.undo(deleted);
+    }
 
+    /**
+     * Método que inserta una dependencia previamente eliminada
+     */
+    @Override
+    public void onSuccessUndo() {
+        adapter.add(deleted);
     }
 
     @Override
@@ -161,7 +172,8 @@ public class ListDependencyFragment extends Fragment implements ListDependencyCo
         Bundle bundle = new Bundle();
         bundle.putString(BaseDialogFragment.TITLE, getString(R.string.title_delete_dependency));
         bundle.putString(BaseDialogFragment.MESSAGE, String.format(getString(R.string.message_delete_dependency), dependency.getShortName()));
-        deleted = dependency;
+        bundle.putSerializable("deleted", dependency);
+//        deleted = dependency;     BORRADO
         NavHostFragment.findNavController(this).navigate(R.id.action_listDependencyFragment_to_baseDialogFragment, bundle);
     }
 
@@ -170,7 +182,7 @@ public class ListDependencyFragment extends Fragment implements ListDependencyCo
         switch (item.getItemId()) {
             case R.id.action_sort_by_shortname:
                 //TODO hacer que ordene
-                adapter.SortByShortName(reverseSort);
+                adapter.SortByShortName();
                 reverseSort = !reverseSort;
                 return true;
             case R.id.action_sort_by_name:
